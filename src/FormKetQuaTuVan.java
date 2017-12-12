@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -12,12 +13,12 @@ import javax.swing.table.DefaultTableModel;
  * @author trananh bacninh
  */
 public class FormKetQuaTuVan extends javax.swing.JDialog {
-    private School school;
+    private ArrayList<School> schools;
     /**
      * Creates new form FormKetQuaTuVan
      */
-    public FormKetQuaTuVan(School school) {
-        this.school=school;
+    public FormKetQuaTuVan(ArrayList<School> schools) {
+        this.schools=schools;
         initComponents();
         this.setVisible(true);
         this.setTitle("Kết quả tư vấn");
@@ -25,12 +26,12 @@ public class FormKetQuaTuVan extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
     }
     public void setKetQua(){
-         String col[]={"Tên trường","Mô tả","Top","Khả năng đỗ"};
+         String col[]={"Tên trường","Mô tả","Top"};
          DefaultTableModel tableModel=new DefaultTableModel(col,0);
-         
-             Object[]obj={school.getName(),school.getDecription(),school.getTop(),"90%"};
+            for(int i=0;i<this.schools.size();i++){
+             Object[]obj={schools.get(i).getName(),schools.get(i).getDecription(),schools.get(i).getTop()};
              tableModel.addRow(obj);
-         
+            }
          this.jTable_KetQua.setModel(tableModel);
      }
     

@@ -342,9 +342,9 @@ public class GiaoDien1 extends javax.swing.JFrame implements NhapDiem {
         if(this.hocSinh.getListDiemThiThu().size()!=3 || this.hocSinh.getListDiemTongKet12().size()!=3){
             JOptionPane.showMessageDialog(null,"Chưa nhập điểm");
         }else{
-        School school=(new Core(this.hocSinh)).start();
+        ArrayList<School> schools=(new Core(this.hocSinh)).start();
         
-        new FormKetQuaTuVan(school);
+        new FormKetQuaTuVan(schools);
         System.out.println(this.hocSinh.hienThiThongTin());
         }
     }//GEN-LAST:event_jB_TuVanActionPerformed

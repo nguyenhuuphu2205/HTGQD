@@ -71,7 +71,7 @@ public class Core {
     }
     //Hàm tính điểm sàn của trường
     public double getDiemSan(School school,String khoiThi){
-        double diemSan=15;
+        double diemSan=35;
         for(int i=0;i<school.getListDiemSan().size();i++){
             if(school.getListDiemSan().get(i).getKhoi().equals(khoiThi)){
                 diemSan=school.getListDiemSan().get(i).getDiem();
@@ -431,11 +431,54 @@ public class Core {
         }
         return school;
     }
-    public School start(){
+    //Hàm lấy 3 trường đại học có độ đo C* lớn nhất sắp xếp theo thứ tự giảm dần
+    public ArrayList<School> baTruongLyTuongNhat(){
+        ArrayList<School> list=new ArrayList();
+        ArrayList<Double>doDoTuongTu=this.tinhDoDoTuongTu();
+        ArrayList<Integer> listIndex=new ArrayList();
+        for(int i=0;i<doDoTuongTu.size();i++){
+            listIndex.add(new Integer(i));
+        }
+        for (int i=0;i<doDoTuongTu.size()-1;i++){
+            for(int j=i+1;j<doDoTuongTu.size();j++){
+                double i1=Double.valueOf(doDoTuongTu.get(i));
+                double j1=Double.valueOf(doDoTuongTu.get(j));
+                if(i1<j1){
+                    Double temp=doDoTuongTu.get(i);
+                    doDoTuongTu.set(i, doDoTuongTu.get(j));
+                    doDoTuongTu.set(j, temp);
+                    Integer tmp=listIndex.get(i);
+                    listIndex.set(i,listIndex.get(j));
+                    listIndex.set(j,tmp);
+                }
+            }
+        }
+        int idTruong1=(int)this.tableTopSiS.get(listIndex.get(0).intValue())[0];
+        int idTruong2=(int)this.tableTopSiS.get(listIndex.get(1).intValue())[0];
+        int idTruong3=(int)this.tableTopSiS.get(listIndex.get(2).intValue())[0];
+        for(int i=0;i<this.listSchool.size();i++){
+            if(this.listSchool.get(i).getId()==idTruong1){
+                list.add(this.listSchool.get(i));
+            }
+        }
+        for(int i=0;i<this.listSchool.size();i++){
+            if(this.listSchool.get(i).getId()==idTruong2){
+                list.add(this.listSchool.get(i));
+            }
+        }
+        for(int i=0;i<this.listSchool.size();i++){
+            if(this.listSchool.get(i).getId()==idTruong3){
+                list.add(this.listSchool.get(i));
+            }
+        }
+        return list;
+        
+    }
+    public ArrayList<School> start(){
         this.createTableTopSiS();
         this.chuanHoa();
         //this.db.stop();
         this.db.interrupt();
-        return this.truongLyTuongNhat();
+        return this.baTruongLyTuongNhat();
     }
 }
